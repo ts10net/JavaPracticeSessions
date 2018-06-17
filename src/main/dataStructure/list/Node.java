@@ -1,10 +1,10 @@
 package main.dataStructure.list;
 
-public class Node {
-    int data;
+public class Node<E> {
+    E data;
     Node nextNode;
 
-    public Node(int data) {
+    public Node(E data) {
         this.data = data;
     }
 

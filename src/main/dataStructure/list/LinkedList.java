@@ -7,11 +7,12 @@ import java.util.Arrays;
 /***
  * Notes:
  */
-public class LinkedList {
-    Node head;
+public class LinkedList<E> {
+    private Node<E> head;
+    private int size;
 
-    public void insert(int data) {
-        Node newNode = new Node(data);
+    public void insert(E data) {
+        Node<E> newNode = new Node<E>(data);
 
         if (head == null) {
             head = newNode;
@@ -24,12 +25,14 @@ public class LinkedList {
 
             pointerNode.nextNode = newNode;
         }
+
+        size++;
     }
 
-    public Node find(int data) {
+    public Node<E> find(E data) {
         if (head.data == data) return head;
 
-        Node pointerNode = head;
+        Node<E> pointerNode = head;
         while (null != pointerNode.nextNode && data != pointerNode.data) {
             pointerNode = pointerNode.nextNode;
         }
@@ -37,10 +40,10 @@ public class LinkedList {
         return pointerNode;
     }
 
-    public void remove(int data) {
-        Node preNode = null;
-        Node currentNode = head;
-        Node nextNode = currentNode.nextNode;
+    public void remove(E data) {
+        Node<E> preNode = null;
+        Node<E> currentNode = head;
+        Node<E> nextNode = currentNode.nextNode;
 
         do {
 
@@ -55,6 +58,7 @@ public class LinkedList {
                 }else {
                     preNode.nextNode = currentNode.nextNode;
                 }
+                size--;
             }
 
             preNode = currentNode;
@@ -65,7 +69,7 @@ public class LinkedList {
     }
 
     public void print() {
-        Node pointerNode = head;
+        Node<E> pointerNode = head;
 
         do {
             System.out.print(pointerNode);
@@ -75,14 +79,22 @@ public class LinkedList {
         System.out.print(pointerNode);
     }
 
+    public int size(){
+        return size;
+    }
+
     public static void main(String[] args) {
+        integerListTest();
+        stringListTest();
+    }
+
+    private static void integerListTest() {
+        LinkedList<Integer> linkedList = new LinkedList<>();
+
         int[] intArray = Utils.randomizeArray(10);
         intArray[0] = intArray[1];
 
         System.out.println("Array: " + Arrays.toString(intArray));
-
-        LinkedList linkedList = new LinkedList();
-
         for (int num : intArray) {
             linkedList.insert(num);
         }
@@ -106,6 +118,36 @@ public class LinkedList {
         linkedList.remove(intArray[intArray.length / 2]);
         System.out.print("Linked list: ");
         linkedList.print();
+    }
 
+    private static void stringListTest(){
+        LinkedList<String> linkedList = new LinkedList<>();
+
+        linkedList.insert("Z");
+        linkedList.insert("C");
+        linkedList.insert("M");
+        linkedList.insert("P");
+        linkedList.insert("A");
+
+        System.out.print("\n\nString List: ");
+        linkedList.print();
+
+
+        System.out.println("Remove last at: " + (linkedList.size()-1));
+        linkedList.remove("A");
+        System.out.print("Linked list: ");
+        linkedList.print();
+
+        System.out.println("Remove first: " + "Z");
+        linkedList.remove("Z");
+        System.out.print("Linked list: ");
+        linkedList.print();
+
+        System.out.println("New size: " + linkedList.size());
+/*
+        System.out.println("Remove mid: " + intArray[intArray.length / 2]);
+        linkedList.remove(intArray[intArray.length / 2]);
+        System.out.print("Linked list: ");
+        linkedList.print();*/
     }
 }
